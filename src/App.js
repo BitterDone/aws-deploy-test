@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          This is an AWS deployment test site for pipeline
         </a>
       </header>
     </div>
