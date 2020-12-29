@@ -19,3 +19,13 @@ COPY . ./
 
 # start app
 CMD ["npm", "start"]
+
+# docker run -it --rm
+# -p 3001:3000
+# -v ${PWD}:/app -v /app/node_modules
+# -e CHOKIDAR_USEPOLLING=true
+# aws-deploy-test:dev
+
+# docker run
+# -p 3001:3000
+# aws-deploy-test:dev
