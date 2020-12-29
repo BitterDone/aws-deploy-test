@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          This is an AWS deployment test site for pipeline
+          This is Dan Bitter's AWS deployment test site
         </a>
       </header>
     </div>
