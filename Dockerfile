@@ -1,24 +1,32 @@
 # https://mherman.org/blog/dockerizing-a-react-app/
-# pull official base image
-FROM node:13.12.0-alpine
+# https://medium.com/@daniel.revie1/deploying-react-docker-image-to-aws-fargate-bf551128cb88
+# build env
+FROM node:13.12.0-alpine as builder
 
 # set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 
 # add app
-COPY . ./
+COPY . /usr/src/app
 
 # start app
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+RUN npm run build
+
+# production environment
+FROM nginx:1.13.9-alpine
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"] 
 
 # docker run -it --rm
 # -p 3001:3000
